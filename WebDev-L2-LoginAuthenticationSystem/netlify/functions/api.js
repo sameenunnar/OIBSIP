@@ -1,5 +1,9 @@
 const serverless = require("serverless-http");
-const app = require("../../server");
+// IMPORTANT: require the file explicitly, not the "../../server" directory.
+// server/package.json sets "main": "server.js", so requiring the directory
+// silently loads server.js (which calls app.listen() and an un-awaited
+// connectDB()) instead of the serverless-safe index.js that just exports `app`.
+const app = require("../../server/index.js");
 const connectDB = require("../../server/config/db");
 
 const expressHandler = serverless(app);

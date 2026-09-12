@@ -11,6 +11,11 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
+// Netlify Functions sit behind a proxy, so incoming requests carry an
+// X-Forwarded-For header. Without this, express-rate-limit (used on the
+// login route) throws a ValidationError instead of rate-limiting correctly.
+app.set("trust proxy", 1);
+
 // --- CORS (must come before other middleware) ---
 const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:5173")
   .split(",")

@@ -12,9 +12,6 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- Database ---
-connectDB();
-
 // --- Core middleware ---
 app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
@@ -81,6 +78,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`[server] LoginAuthentication API running on http://localhost:${PORT}`);
-});
+// Only run these side effects for local/traditional hosting (`node server.js`
+// or `npm run dev`/`npm start`). If this file is ever `require()`d as a module
+// (e.g. by a serverless function), skip straight past this block instead of
+// opening a port and firing an unhandled connection promise.
+if (require.main === module) {
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`[server] LoginAuthentication API running on http://localhost:${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error("[server] Failed to connect to MongoDB, exiting:", err.message);
+      process.exit(1);
+    });
+}
+
+module.exports = app;
