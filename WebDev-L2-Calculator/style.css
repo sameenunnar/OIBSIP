@@ -1,0 +1,236 @@
+
+/* Task 1 opening/splash screen */
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #05050a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.65s ease, visibility 0.65s ease;
+}
+
+.intro-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-screen__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.intro-screen__skip {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 999px;
+  padding: 11px 24px;
+  background: rgba(10, 5, 18, 0.72);
+  color: #fff;
+  font: 600 0.95rem "IBM Plex Mono", ui-monospace, monospace;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.intro-screen__skip:hover {
+  transform: translateX(-50%) translateY(-2px);
+  background: rgba(35, 10, 55, 0.88);
+}
+
+.intro-screen__skip:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+body.intro-active {
+  overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .intro-screen__image {
+    object-fit: contain;
+  }
+
+  .intro-screen__skip {
+    bottom: 20px;
+    padding: 10px 20px;
+  }
+}
+:root {
+  --bg: #101116;
+  --panel: #1c1e26;
+  --display-bg: #0a0b0e;
+  --display-fg: #ffb454;
+  --display-fg-dim: #8a7358;
+  --key-num-bg: #2a2d37;
+  --key-num-bg-hover: #33363f;
+  --key-num-fg: #eceef2;
+  --key-fn-bg: #565b66;
+  --key-fn-bg-hover: #656b78;
+  --key-fn-fg: #101116;
+  --key-op-bg: #3a2e2a;
+  --key-op-bg-hover: #4a3a34;
+  --key-op-fg: #ff8a5c;
+  --key-eq-bg: #ffb454;
+  --key-eq-bg-hover: #ffc574;
+  --key-eq-fg: #101116;
+  --radius: 10px;
+  --gap: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.calculator {
+  width: 100%;
+  max-width: 340px;
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.screen {
+  background: var(--display-bg);
+  border-radius: var(--radius);
+  padding: 22px 18px 16px;
+  margin-bottom: var(--gap);
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.screen__history {
+  color: var(--display-fg-dim);
+  font-size: 0.95rem;
+  min-height: 1.2em;
+  text-align: right;
+  white-space: nowrap;
+  overflow-x: auto;
+  letter-spacing: 0.02em;
+}
+
+.screen__result {
+  color: var(--display-fg);
+  font-size: 2.4rem;
+  font-weight: 600;
+  text-align: right;
+  line-height: 1.1;
+  word-break: break-all;
+  letter-spacing: 0.01em;
+}
+
+.screen__result.is-error {
+  color: #ff6b6b;
+  font-size: 1.4rem;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.key {
+  border: none;
+  border-radius: var(--radius);
+  padding: 18px 0;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.06s ease;
+  color: var(--key-num-fg);
+  background: var(--key-num-bg);
+}
+
+.key:active {
+  transform: scale(0.96);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--display-fg);
+  outline-offset: 2px;
+}
+
+.key--num:hover {
+  background: var(--key-num-bg-hover);
+}
+
+.key--fn {
+  background: var(--key-fn-bg);
+  color: var(--key-fn-fg);
+  font-weight: 600;
+}
+
+.key--fn:hover {
+  background: var(--key-fn-bg-hover);
+}
+
+.key--op {
+  background: var(--key-op-bg);
+  color: var(--key-op-fg);
+  font-weight: 600;
+}
+
+.key--op:hover {
+  background: var(--key-op-bg-hover);
+}
+
+.key--op.is-active {
+  background: var(--key-op-fg);
+  color: var(--key-op-bg);
+}
+
+.key--eq {
+  background: var(--key-eq-bg);
+  color: var(--key-eq-fg);
+  font-weight: 700;
+}
+
+.key--eq:hover {
+  background: var(--key-eq-bg-hover);
+}
+
+.key--zero {
+  grid-column: span 2;
+}
+
+@media (max-width: 360px) {
+  .screen__result {
+    font-size: 1.9rem;
+  }
+  .key {
+    padding: 15px 0;
+    font-size: 1.05rem;
+  }
+}

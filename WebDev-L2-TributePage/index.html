@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ada Lovelace — A Tribute</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section class="intro-screen" id="introScreen" aria-label="Task 2 introduction">
+    <img class="intro-screen__image" src="./task2-intro.png" alt="Sameen Unnar — Web Development &amp; Designing — Task 2 Tribute Page" />
+    <button class="intro-screen__skip" id="startTribute" type="button">Start Tribute Page</button>
+  </section>
+
+  <div id="tributeContent" class="tribute-content">
+
+  <header class="hero">
+    <div class="hero__inner">
+      <svg
+        class="hero__portrait"
+        viewBox="0 0 220 280"
+        role="img"
+        aria-label="1840 watercolor portrait of Ada Lovelace by Alfred Edward Chalon"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <defs>
+          <linearGradient id="cameoBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2f3c5e" />
+            <stop offset="100%" stop-color="#1a2338" />
+          </linearGradient>
+          <clipPath id="photoClip">
+            <rect x="3" y="3" width="214" height="274" rx="12" />
+          </clipPath>
+        </defs>
+
+        <!-- background shows through only if the photo fails to load -->
+        <rect x="3" y="3" width="214" height="274" rx="12" fill="url(#cameoBg)" />
+
+        <image
+          id="portrait"
+          x="3"
+          y="3"
+          width="214"
+          height="274"
+          href="https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg"
+          xlink:href="https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg"
+          clip-path="url(#photoClip)"
+          preserveAspectRatio="xMidYMid slice"
+        />
+
+        <rect x="3" y="3" width="214" height="274" rx="12" fill="none" stroke="#b08d57" stroke-width="5" />
+        <rect x="10" y="10" width="200" height="260" rx="8" fill="none" stroke="#b08d57" stroke-width="1" opacity="0.5" />
+      </svg>
+      <div class="hero__text">
+        <p class="hero__eyebrow">A Tribute To</p>
+        <h1 class="hero__name">Ada Lovelace</h1>
+        <p class="hero__tagline">The mathematician who saw a future in machines before anyone had built one worth imagining.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section--bio">
+      <h2 class="section__heading">Her Life</h2>
+      <div class="bio">
+        <p>
+          Augusta Ada King, Countess of Lovelace, was born in London in 1815, the only
+          legitimate child of the poet Lord Byron. Her mother, wary of the "poetic"
+          temperament she associated with Byron, steered Ada firmly toward mathematics
+          and logic from an early age — a decision that would shape the course of
+          computing history a century later.
+        </p>
+        <p>
+          As a young woman, Ada was introduced to Charles Babbage, the inventor of the
+          Difference Engine and, later, the far more ambitious Analytical Engine. Where
+          most of Babbage's contemporaries saw an elaborate calculating machine, Ada saw
+          something else entirely: a device that could, in principle, manipulate any
+          symbol according to rules, not just numbers.
+        </p>
+        <p>
+          In 1843, while translating an Italian mathematician's paper on the Analytical
+          Engine, Ada added a set of her own notes — nearly three times the length of
+          the original text. Tucked inside was a step-by-step method for the machine to
+          compute Bernoulli numbers, a sequence that could not simply be looked up or
+          calculated by hand. Many historians consider this the first published
+          algorithm intended for execution by a machine, which is why Ada is often
+          credited as the world's first computer programmer.
+        </p>
+        <p>
+          She also wrote, with striking prescience, that such a machine might one day
+          compose music or produce graphics if the right rules were given to it — an
+          idea that would not be taken seriously again for well over a hundred years.
+          Ada Lovelace died in 1852 at the age of 36, long before any machine capable of
+          running her algorithm was ever built.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--achievements">
+      <h2 class="section__heading">Key Milestones</h2>
+      <ol class="timeline">
+        <li class="timeline__item">
+          <span class="timeline__year">1815</span>
+          <div class="timeline__body">
+            <h3>Born in London</h3>
+            <p>Raised largely by her mother, Lady Byron, who insisted on a rigorous education in mathematics and science.</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__year">1833</span>
+          <div class="timeline__body">
+            <h3>Meets Charles Babbage</h3>
+            <p>Introduced to Babbage's Difference Engine at a demonstration, sparking a lifelong intellectual partnership.</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__year">1843</span>
+          <div class="timeline__body">
+            <h3>Publishes the first algorithm</h3>
+            <p>Her notes on the Analytical Engine include a method for computing Bernoulli numbers — widely regarded as the first algorithm written for a machine.</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__year">1843</span>
+          <div class="timeline__body">
+            <h3>Imagines general-purpose computing</h3>
+            <p>Suggests the Analytical Engine could manipulate more than numbers — including music and graphics — decades before such ideas were revisited.</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__year">1980</span>
+          <div class="timeline__body">
+            <h3>Honoured by name</h3>
+            <p>The U.S. Department of Defense names its newly standardised programming language "Ada" in her honour.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section section--quote">
+      <blockquote class="quote">
+        <p>"That brain of mine is something more than merely mortal, as time will show."</p>
+        <cite>— Ada Lovelace, in a letter, 1843</cite>
+      </blockquote>
+    </section>
+  </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

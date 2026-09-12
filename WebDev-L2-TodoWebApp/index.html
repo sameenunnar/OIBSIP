@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A modern task dashboard for organizing daily work." />
+  <title>TaskFlow — To-Do Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="intro-screen" id="introScreen" aria-label="Task 3 introduction">
+    <img class="intro-screen__image" src="./task3-intro.png" alt="Sameen Unnar — Web Development &amp; Designing — Task 3 To-Do Web App" />
+    <button class="intro-screen__skip" id="startTodo" type="button">Start To-Do App</button>
+  </section>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Task navigation">
+      <div class="brand">
+        <span class="brand__mark">✓</span>
+        <span>TaskFlow</span>
+      </div>
+
+      <div class="sidebar__section">
+        <p class="sidebar__label">Workspace</p>
+        <nav class="sidebar__nav" id="view-nav">
+          <button class="nav-item is-active" type="button" data-view="my">
+            <span class="nav-item__icon">▣</span><span>My Tasks</span><span class="nav-item__count" id="my-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-view="all">
+            <span class="nav-item__icon">☷</span><span>All Tasks</span><span class="nav-item__count" id="all-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-view="today">
+            <span class="nav-item__icon">◷</span><span>Today</span><span class="nav-item__count" id="today-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-view="important">
+            <span class="nav-item__icon">★</span><span>Important</span><span class="nav-item__count" id="important-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-view="completed">
+            <span class="nav-item__icon">✓</span><span>Completed</span><span class="nav-item__count" id="completed-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-view="trash">
+            <span class="nav-item__icon">⌫</span><span>Trash</span><span class="nav-item__count" id="trash-count">0</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar__footer">
+        <div class="profile">
+          <span class="profile__avatar">TF</span>
+          <div><strong>My workspace</strong><small>Personal tasks</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">YOUR WORKSPACE</p>
+          <h1 id="page-title">My Tasks</h1>
+          <p class="page-subtitle" id="page-subtitle">Stay focused and get things done.</p>
+        </div>
+        <button class="btn btn--primary" id="add-btn" type="button">
+          <span aria-hidden="true">+</span> Add Task
+        </button>
+      </header>
+
+      <section class="toolbar" aria-label="Task tools">
+        <label class="search">
+          <span class="search__icon" aria-hidden="true">⌕</span>
+          <span class="sr-only">Search tasks</span>
+          <input id="search-input" type="search" placeholder="Search tasks..." autocomplete="off" />
+          <kbd>⌘ K</kbd>
+        </label>
+        <div class="category-filters" id="category-filters">
+          <button class="filter-chip is-active" type="button" data-category="all">All</button>
+          <button class="filter-chip" type="button" data-category="Frontend">Frontend</button>
+          <button class="filter-chip" type="button" data-category="JavaScript">JavaScript</button>
+          <button class="filter-chip" type="button" data-category="Backend">Backend</button>
+        </div>
+      </section>
+
+      <form class="add-form" id="add-form" autocomplete="off" hidden>
+        <div class="add-form__input">
+          <label class="sr-only" for="task-input">New task</label>
+          <input id="task-input" name="task" type="text" maxlength="140" placeholder="What needs to be done?" required />
+        </div>
+        <select id="category-input" aria-label="Task category">
+          <option value="Frontend">Frontend</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="Backend">Backend</option>
+        </select>
+        <button type="submit" class="btn btn--primary">Create Task</button>
+        <button type="button" class="btn btn--ghost" id="cancel-add">Cancel</button>
+      </form>
+      <p class="form-error" id="form-error" role="alert" aria-live="polite"></p>
+
+      <section class="summary-card" aria-label="Task summary">
+        <div class="summary-card__icon">✓</div>
+        <div>
+          <strong id="summary-title">Keep going!</strong>
+          <p id="summary-text">You have tasks waiting for your attention.</p>
+        </div>
+      </section>
+
+      <section class="tasks-card" aria-labelledby="tasks-heading">
+        <div class="tasks-card__head">
+          <div>
+            <h2 id="tasks-heading">Tasks</h2>
+            <span id="task-count-label">0 tasks</span>
+          </div>
+          <button type="button" class="text-btn" id="clear-completed">Clear completed</button>
+        </div>
+
+        <ul class="task-list" id="task-list"></ul>
+        <div class="empty-state" id="empty-state" hidden>
+          <div class="empty-state__icon">✓</div>
+          <h3 id="empty-title">No tasks here</h3>
+          <p id="empty-text">Add a task to start organizing your work.</p>
+          <button type="button" class="btn btn--primary" id="empty-add">Add your first task</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="task-template">
+    <li class="task" data-id="">
+      <label class="task__check" title="Mark task complete">
+        <input type="checkbox" class="task__checkbox" aria-label="Mark task complete" />
+        <span class="task__checkmark" aria-hidden="true">✓</span>
+      </label>
+      <div class="task__body">
+        <div class="task__title-row">
+          <p class="task__text"></p>
+          <span class="task__category"></span>
+        </div>
+        <input type="text" class="task__edit-input" maxlength="140" hidden />
+        <p class="task__timestamp"></p>
+      </div>
+      <button type="button" class="icon-btn task__important-btn" aria-label="Mark important" title="Mark important">★</button>
+      <div class="task__actions">
+        <button type="button" class="icon-btn task__edit-btn" aria-label="Edit task" title="Edit">✎</button>
+        <button type="button" class="icon-btn task__save-btn" aria-label="Save task" title="Save" hidden>✓</button>
+        <button type="button" class="icon-btn icon-btn--danger task__delete-btn" aria-label="Move task to trash" title="Move to trash">⌫</button>
+        <button type="button" class="icon-btn task__restore-btn" aria-label="Restore task" title="Restore" hidden>↶</button>
+        <button type="button" class="icon-btn icon-btn--danger task__permanent-delete-btn" aria-label="Delete permanently" title="Delete permanently" hidden>×</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

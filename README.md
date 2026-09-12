@@ -1,235 +1,500 @@
-![Login Authentication System](./task2-intro.png)
+# 🚀 OIBSIP — Web Development Projects
 
-# LoginAuthentication
-
-A full-stack authentication starter kit with a **Node.js + Express + MongoDB** backend
-and a **React (Vite) + Tailwind CSS** frontend. It includes registration, login,
-logout, JWT access/refresh tokens, bcrypt password hashing, and a protected
-dashboard route.
+> A collection of web development projects including a Calculator, Full-Stack Login Authentication System, To-Do Web App, and Tribute Page.
 
 ---
+
+# 📂 Projects
+
+This repository contains the following projects:
+
+* 🧮 Calculator
+* 🔐 Login Authentication System
+* ✅ To-Do Web App
+* 🏛️ Tribute Page — Ada Lovelace
+
+---
+
+# 🧮 01 — Calculator
+
+**Folder:** `WebDev-L2-Calculator`
+
+A fully functional browser-based calculator built with HTML5, CSS3, and vanilla JavaScript.
 
 ## ✨ Features
 
-- **Secure authentication**
-  - Passwords hashed with `bcryptjs` before being stored
-  - Short-lived **JWT access tokens** (returned to the client, stored in memory/localStorage)
-  - Long-lived **refresh tokens** stored in an `httpOnly` cookie and rotated on refresh
-  - Automatic silent token refresh on the client via an Axios interceptor
-- **Express API**
-  - `POST /api/auth/register` — create an account
-  - `POST /api/auth/login` — authenticate and receive tokens
-  - `POST /api/auth/refresh` — exchange a valid refresh cookie for a new access token
-  - `POST /api/auth/logout` — invalidate the refresh token and clear the cookie
-  - `GET  /api/auth/profile` — return the current authenticated user (protected)
-  - Input validation with `express-validator`
-  - Rate limiting on the login endpoint to slow brute-force attempts
-  - Security headers via `helmet`, request logging via `morgan`
-- **MongoDB / Mongoose** user model with unique email, role field (`user` / `admin`)
-- **React client**
-  - `Login` and `Register` pages with client-side validation and error handling
-  - `ProtectedRoute` component that redirects unauthenticated users to `/login`
-  - `AuthContext` for global auth state (`user`, `login`, `register`, `logout`)
-  - A polished **Dashboard** (protected route) with sidebar navigation, activity
-    feed, analytics charts, settings, and a user directory
-- **Developer experience**
-  - Root-level scripts to install and run both client and server concurrently
-  - Sensible `.gitignore`, `.env` templates, and an MIT `LICENSE`
+* Display screen showing the running expression and current input/result
+* Digit buttons from `0–9`
+* Decimal point support
+* Addition
+* Subtraction
+* Multiplication
+* Division
+* Equals button for calculations
+* Clear button to reset the calculator
+* Backspace button to delete the last character
+* Division-by-zero protection
+* Operator chaining
+* Percentage calculation
+* Keyboard support
+* Responsive button layout using CSS Grid
+* Event handling using `addEventListener`
+* No inline `onclick`
+* No use of `eval()`
 
----
+## 🛠️ Technologies
 
-## 🗂️ Project Structure
+* HTML5
+* CSS3
+* JavaScript (Vanilla ES6+)
+* CSS Grid
+* CSS Variables
+* IBM Plex Mono font
 
-```
-LoginAuthentication/
-├── client/                     # React (Vite) frontend
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── axios.js        # Axios instance + auth/refresh interceptors
-│   │   ├── components/
-│   │   │   └── ProtectedRoute.jsx
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx # Global auth state & API calls
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   └── Dashboard.jsx   # Protected dashboard
-│   │   ├── App.jsx             # Route definitions
-│   │   ├── main.jsx            # App entry point
-│   │   └── index.css
-│   ├── .env.example
-│   ├── index.html
-│   ├── package.json
-│   ├── postcss.config.js
-│   ├── tailwind.config.js
-│   └── vite.config.js
-├── server/                     # Express backend
-│   ├── config/
-│   │   └── db.js               # MongoDB connection
-│   ├── controllers/
-│   │   └── authController.js   # register/login/refresh/logout/profile logic
-│   ├── middleware/
-│   │   └── auth.js             # JWT verification & role guard
-│   ├── models/
-│   │   └── User.js             # Mongoose schema + bcrypt hooks
-│   ├── routes/
-│   │   └── authRoutes.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js               # App entry point
-├── .env                        # Documents all env vars (see below)
-├── .gitignore
-├── LICENSE                     # MIT
-├── package.json                # Root scripts (concurrently runs client + server)
-└── README.md
-```
+## ▶️ How to Run
 
----
-
-## ✅ Prerequisites
-
-- **Node.js** 18+ and npm
-- **MongoDB** running locally (`mongodb://127.0.0.1:27017`) or a MongoDB Atlas connection string
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone / unzip the project and install dependencies
-
-From the project root:
+1. Open the project folder:
 
 ```bash
-npm run install:all
+cd WebDev-L2-Calculator  
 ```
 
-This installs the root `concurrently` dependency plus the `server` and `client`
-dependencies in one go. (Equivalent to running `npm install` in `server/` and
-`client/` individually.)
+2. Open `index.html` in a modern browser.
 
-### 2. Configure environment variables
+No server, dependencies, or build process is required.
 
-Two working `.env` files are already included with safe local defaults:
+---
 
-- `server/.env` — API port, MongoDB URI, JWT secrets, bcrypt rounds, allowed CORS origin
-- `client/.env` — `VITE_API_URL` pointing at the API
+# 🔐 02 — Login Authentication System
 
-**Before deploying anywhere beyond your machine, replace `JWT_SECRET` and
-`JWT_REFRESH_SECRET` with long, random values** (e.g. `openssl rand -hex 64`).
-The root `.env` file is a reference copy documenting every variable used by
-both the client and the server — it isn't loaded automatically by either app.
+**Folder:** `LoginAuthentication`
 
-### 3. Start MongoDB
+A full-stack authentication application with a Node.js, Express, and MongoDB backend and a React frontend built using Vite and Tailwind CSS.
 
-Make sure a MongoDB instance is running and reachable at the URI configured
-in `server/.env` (`MONGO_URI`).
+The application includes registration, login, logout, JWT authentication, refresh tokens, password hashing, and a protected dashboard.
 
-### 4. Run the app
+## ✨ Authentication Features
 
-From the project root, start both the API and the client together:
+### User Authentication
+
+* User registration
+* User login
+* User logout
+* Password hashing with `bcryptjs`
+* JWT access tokens
+* JWT refresh tokens
+* Refresh token rotation
+* Protected user profile
+* Authentication middleware
+* Protected dashboard route
+
+### Security Features
+
+* Refresh tokens stored in `httpOnly` cookies
+* Access token authentication
+* Silent token refresh
+* Axios authentication interceptors
+* Input validation
+* Login rate limiting
+* Security headers with Helmet
+* Request logging with Morgan
+
+### API Endpoints
+
+| Method | Endpoint             | Description                          |
+| ------ | -------------------- | ------------------------------------ |
+| POST   | `/api/auth/register` | Create a new account                 |
+| POST   | `/api/auth/login`    | Authenticate a user                  |
+| POST   | `/api/auth/refresh`  | Get a new access token               |
+| POST   | `/api/auth/logout`   | Logout and invalidate refresh token  |
+| GET    | `/api/auth/profile`  | Get the authenticated user's profile |
+| GET    | `/api/health`        | API health check                     |
+
+### React Frontend Features
+
+* Login page
+* Registration page
+* Client-side validation
+* Error handling
+* Protected routes
+* `ProtectedRoute` component
+* Global authentication state with `AuthContext`
+* Dashboard
+* Sidebar navigation
+* Activity feed
+* Analytics charts
+* Settings
+* User directory
+
+---
+
+## 🛠️ Technologies
+
+### Frontend
+
+* React
+* Vite
+* Tailwind CSS
+* React Router
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* bcryptjs
+* express-validator
+* Helmet
+* Morgan
+
+---
+
+# 🗂️ Authentication Project Structure
+
+```text
+LoginAuthentication/  
+│  
+├── client/  
+│   ├── src/  
+│   │   ├── api/  
+│   │   │   └── axios.js  
+│   │   │  
+│   │   ├── components/  
+│   │   │   └── ProtectedRoute.jsx  
+│   │   │  
+│   │   ├── context/  
+│   │   │   └── AuthContext.jsx  
+│   │   │  
+│   │   ├── pages/  
+│   │   │   ├── Dashboard.jsx  
+│   │   │   ├── Login.jsx  
+│   │   │   └── Register.jsx  
+│   │   │  
+│   │   ├── App.jsx  
+│   │   ├── main.jsx  
+│   │   └── index.css  
+│   │  
+│   ├── .env.example  
+│   ├── index.html  
+│   ├── package.json  
+│   ├── postcss.config.js  
+│   ├── tailwind.config.js  
+│   └── vite.config.js  
+│  
+├── server/  
+│   ├── config/  
+│   │   └── db.js  
+│   │  
+│   ├── controllers/  
+│   │   └── authController.js  
+│   │  
+│   ├── middleware/  
+│   │   └── auth.js  
+│   │  
+│   ├── models/  
+│   │   └── User.js  
+│   │  
+│   ├── routes/  
+│   │   └── authRoutes.js  
+│   │  
+│   ├── .env.example  
+│   ├── package.json  
+│   └── server.js  
+│  
+├── .gitignore  
+├── LICENSE  
+├── package.json  
+└── README.md  
+```
+
+---
+
+# ▶️ Running the Login Authentication System
+
+## Install Project Dependencies
+
+From the project folder:
 
 ```bash
-npm run dev
+cd LoginAuthentication  
 ```
 
-- API: http://localhost:5000
-- Client: http://localhost:5173
-
-Or run them separately:
+Install dependencies:
 
 ```bash
-npm run server   # starts the Express API with nodemon
-npm run client   # starts the Vite dev server
+npm install  
 ```
 
-### 5. Try it out
-
-1. Open http://localhost:5173 — you'll be redirected to `/login`.
-2. Click **Create one** to register a new account.
-3. On success you're redirected to the protected `/dashboard` route.
-4. Refresh the page — your session persists via the stored access token and
-   the silent refresh flow.
-5. Use the user menu (top right) to **Log out**.
+The project also contains separate `client` and `server` folders.
 
 ---
 
-## 🔐 How authentication works
+## Backend
 
-1. **Register / Login** — the server hashes/validates the password with
-   `bcryptjs`, then issues:
-   - an **access token** (JWT, short-lived, e.g. 1 day) returned in the JSON response
-   - a **refresh token** (JWT, longer-lived, e.g. 7 days) set as an `httpOnly`,
-     `sameSite=lax` cookie scoped to `/api/auth`
-2. **Client storage** — the access token is kept in `localStorage` and attached
-   to every API request as `Authorization: Bearer <token>` via an Axios
-   request interceptor.
-3. **Protected routes** — `GET /api/auth/profile` and any future protected
-   endpoint use the `requireAuth` middleware, which verifies the JWT and loads
-   the user from MongoDB.
-4. **Silent refresh** — if a request comes back `401`, the Axios response
-   interceptor automatically calls `POST /api/auth/refresh` (using the
-   `httpOnly` cookie), stores the new access token, and retries the original
-   request. If the refresh also fails, the user is redirected to `/login`.
-5. **Logout** — clears the refresh token both server-side (removed from the
-   user document) and client-side (cookie cleared, `localStorage` cleared).
-
-> ⚠️ This project is a solid educational/starter foundation. For production,
-> also consider: email verification, password-reset flows, HTTPS-only
-> cookies, CSRF protection, stricter CORS, and centralized logging/monitoring.
-
----
-
-## 📡 API Reference
-
-| Method | Endpoint             | Auth required | Description                          |
-|--------|-----------------------|:--------------:|--------------------------------------|
-| POST   | `/api/auth/register`  | No             | Create a new account                 |
-| POST   | `/api/auth/login`     | No             | Authenticate and receive tokens      |
-| POST   | `/api/auth/refresh`   | Cookie only    | Get a new access token               |
-| POST   | `/api/auth/logout`    | No             | Invalidate refresh token & cookie    |
-| GET    | `/api/auth/profile`   | Yes (Bearer)   | Get the current user's profile       |
-| GET    | `/api/health`         | No             | Health check                         |
-
-**Register / Login request body:**
-
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "password": "supersecret1"
-}
-```
-
-**Successful login/register response:**
-
-```json
-{
-  "message": "Login successful",
-  "accessToken": "<jwt>",
-  "user": {
-    "id": "...",
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "role": "user",
-    "lastLogin": "2026-09-09T12:00:00.000Z",
-    "createdAt": "...",
-    "updatedAt": "..."
-  }
-}
-```
-
----
-
-## 🏗️ Building for production
+Navigate to the server:
 
 ```bash
-npm run build:client     # builds the React app into client/dist
-npm start                # runs the Express server (serve client/dist separately
-                          # or add static-file serving in server.js as needed)
+cd server  
+```
+
+Install dependencies:
+
+```bash
+npm install  
+```
+
+Configure environment variables using:
+
+```text
+.env.example  
+```
+
+Then start the server using the available npm scripts.
+
+---
+
+## Frontend
+
+Navigate to the client:
+
+```bash
+cd client  
+```
+
+Install dependencies:
+
+```bash
+npm install  
+```
+
+Start the Vite development server:
+
+```bash
+npm run dev  
 ```
 
 ---
 
-## 📄 License
+# ✅ 03 — To-Do Web App
 
-This project is licensed under the [MIT License](LICENSE).
+**Folder:** `WebDev-L2-TodoWebApp`
+
+An interactive To-Do application built with HTML5, CSS3, and vanilla JavaScript.
+
+The application supports task management with separate Pending and Completed sections and stores tasks using browser `localStorage`.
+
+## ✨ Features
+
+* Add new tasks
+* Press Enter to add tasks
+* Pending tasks list
+* Completed tasks list
+* Mark tasks as complete
+* Move completed tasks back to pending
+* Edit tasks
+* Save edited tasks
+* Cancel editing with Escape
+* Delete tasks
+* Pending task counter
+* Completed task counter
+* Task timestamps
+* Added time display
+* Completed time display
+* Empty-state messages
+* Input validation
+* Blank task prevention
+* Task persistence with `localStorage`
+* Responsive two-column layout
+* Event delegation
+* No inline `onclick`
+
+## 🛠️ Technologies
+
+* HTML5
+* CSS3
+* JavaScript (Vanilla ES6+)
+* CSS Grid
+* `localStorage`
+* HTML `<template>` element
+
+## ▶️ How to Run
+
+1. Open the project folder:
+
+```bash
+cd WebDev-L2-TodoWebApp  
+```
+
+2. Open `index.html` in a modern browser.
+
+No dependencies, server, or build process is required.
+
+Tasks remain saved after refreshing the page through browser `localStorage`.
+
+---
+
+# 🏛️ 04 — Tribute Page
+
+**Folder:** `WebDev-L2-TributePage`
+
+A tribute page dedicated to **Ada Lovelace**, the mathematician whose work on Charles Babbage's Analytical Engine included what is widely recognized as the first published algorithm intended for a machine.
+
+## ✨ Features
+
+* Ada Lovelace hero section
+* One-line tagline
+* Prominent portrait presentation
+* Decorative SVG portrait frame
+* Biography section
+* Four original biography paragraphs
+* Key milestones timeline
+* Timeline covering important events from 1815 to 1980
+* Styled quote section
+* Multiple visually distinct section backgrounds
+* Responsive design
+* Mobile layout support
+* Portrait fallback system
+* SVG fallback monogram when the image cannot load
+
+## 🛠️ Technologies
+
+* HTML5
+* CSS3
+* JavaScript
+* Flexbox
+* CSS Variables
+* Inline SVG
+* Playfair Display
+* Source Sans 3
+
+## ▶️ How to Run
+
+1. Extract the project to a normal folder.
+
+2. Open:
+
+```text
+WebDev-L2-TributePage/index.html  
+```
+
+You can open it directly in a browser or use a local development server such as VS Code Live Server.
+
+No dependencies or build process are required.
+
+---
+
+# 🗂️ Complete Repository Structure
+
+```text
+OIBSIP/  
+│  
+├── WebDev-L2-Calculator/  
+│   ├── index.html  
+│   ├── style.css  
+│   ├── script.js  
+│   └── README.md  
+│  
+├── LoginAuthentication/  
+│   ├── client/  
+│   ├── server/  
+│   ├── package.json  
+│   ├── .gitignore  
+│   ├── LICENSE  
+│   └── README.md  
+│  
+├── WebDev-L2-TodoWebApp/  
+│   ├── index.html  
+│   ├── style.css  
+│   ├── script.js  
+│   └── README.md  
+│  
+├── WebDev-L2-TributePage/  
+│   ├── index.html  
+│   ├── style.css  
+│   ├── script.js  
+│   └── README.md  
+│  
+├── .gitattributes  
+│  
+└── README.md  
+```
+
+---
+
+# 💻 Technologies Used
+
+Across these projects, the technologies used include:
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+* React
+* React Router
+* Tailwind CSS
+* Vite
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Authentication & Security
+
+* JWT
+* bcryptjs
+* HTTP-only cookies
+* Token refresh
+* Helmet
+* Rate limiting
+* Input validation
+
+### Browser Features
+
+* DOM Manipulation
+* Event Listeners
+* Event Delegation
+* CSS Grid
+* Flexbox
+* CSS Variables
+* Local Storage
+* Keyboard Events
+
+---
+
+# 🚀 Getting Started
+
+Clone the repository:
+
+```bash
+git clone YOUR_REPOSITORY_URL  
+```
+
+Open the repository:
+
+```bash
+cd OIBSIP  
+```
+
+Then select the project you want to run.
+
+For the Calculator, Tribute Page, and To-Do Web App, simply open their `index.html` files in a browser.
+
+For the Login Authentication project, install the required dependencies for the client and server.
+
+---
+
+# 📄 License
+
+The `LoginAuthentication` project includes an MIT License.
+
+See the project's `LICENSE` file for more information.
